@@ -1,0 +1,44 @@
+body{
+    font-family: Claus Eggers Sørensen;
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    align-items: flex-start;
+    font-weight: bold;
+}
+.pokedex-container{
+    border-radius: 10px;
+    padding: 20px;
+}
+h1{
+    text-align: center;
+    color:#3D7DCA;
+}
+.pokemon-list{
+    display: grid;
+    grid-template-columns: repeat(5,1fr);
+    gap: 20px;
+}
+.pokemon-card{
+    background-color: #eee;
+    border: 1px solid #ddd;
+    width: 200px;
+    border-radius: 8px;
+    padding: 10px;
+    text-align: center;
+    background: radial-gradient(#ABB9E4,#D460DB );
+}
+.pokemon-card img{
+    width: 100px;
+    height: 100px;
+}
+@media (width <= 600px){
+    .pokemon-list{
+        grid-template-columns: repeat(1,1fr);
+    }
+}
+@media (600px < width < 900px){
+    .pokemon-list{
+        grid-template-columns: repeat(3,1fr);
+    }
+}
