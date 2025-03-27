@@ -2,6 +2,9 @@ const pokemonList = document.getElementById("pokemonList")
 const pokemonDetail = document.getElementById("pokemonDetail")
 const pokemonInfo = document.getElementById("pokemonInfo")
 const btnBack = document.getElementById("btnBack")
+const btnsearch= document.getElementById("btnsearch")
+const Search = document.getElementById("Search")
+let pokemonToSearch =""
 let type = null
 
 async function getPokemonData(pokemonID) {
@@ -11,7 +14,7 @@ async function getPokemonData(pokemonID) {
         return pokemon
     } catch (error) {
         console.error(error.message)
-        return null
+        return false
     }
  
 }
@@ -29,17 +32,19 @@ function displayPokemon(pokemon){
 }
 function showPokemonDetail(pokemon){
     console.log(pokemon.types.length)
-    let types = " "
+    let typesName = []
+    let typesImg = ""
     for(i=0;i<pokemon.types.length;i++){
         console.log(pokemon.types[i].type.name)
-        types= types + pokemon.types[i].type.name + " "
+        typesImg = typesImg + `<img src="./assets/${pokemon.types[i].type.name}.png" alt= "logo tipo ${pokemon.types[i].type.name}">`
+        typesName.push(pokemon.types[i].type.name)
     }
     pokemonList.style.display ="none"
     pokemonDetail.style.display ="block"
     pokemonInfo.innerHTML = `
     <img src="${pokemon.sprites.front_default}" alt="Image view front ${pokemon.name}">
     <img src="${pokemon.sprites.back_default}" alt="Image view back ${pokemon.name}">
-    <h3>${types}</h3>
+    <div>${typesImg}</div>
     `
 }
 async function loadPokedex() {
@@ -52,4 +57,20 @@ btnBack.addEventListener("click",()=>{
     pokemonList.style.display = "grid"
     pokemonDetail.style.display = "none"
 })
+
+Search.addEventListener("input",(e)=> {
+    pokemonToSearch = e.target.value
+    console.log(pokemonToSearch)
+})
+
+btnsearch.addEventListener("click",async () => {
+    let pokemon = await getPokemonData(pokemonToSearch)
+    if(pokemon==false){
+        console.error("Pokemon not found")
+        return alert("pokemon not found")
+    }
+    showPokemonDetail(pokemon)
+})
+
 loadPokedex()
+
